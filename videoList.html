@@ -1,0 +1,18 @@
+<div>
+<ul>
+  <li class="video-block" ng-repeat="video in videos">
+	  <div class="youtube-player">
+			  <iframe id="ytplayer" type="text/html" width="640" height="360"
+			  ng-src="http://www.youtube.com/embed/4aMU4g2B_Wo?autoplay=0"
+			  frameborder="0"></iframe><!--{{video.$id}} cf sce-->
+			  <div class="voting-stuff">
+				<div class="vote-count" >
+					<p id="vote">{{ video.$value }}</p>
+				</div>
+				<button type="button" class="btn btn-danger" aria-label="Down Vote" ><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-success" aria-label="Up Vote" ng-click="upVote(video)"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
+			  </div>
+		</div>
+	</li>
+</ul>
+</div>  

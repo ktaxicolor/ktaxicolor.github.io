@@ -2,7 +2,7 @@
 <html lang="en" ng-app="myapp">
 <head>
     <meta charset="UTF-8">
-    <title>Subtitle Hub Demo</title>
+    <title>Subtitles Demo</title>
 
     <!-- CSS -->
     <!-- load Bootstrap and custom style.css -->
@@ -12,40 +12,68 @@
     <!-- JS -->
     <!-- load Angular, Firebase, Firebase Angular Library, and custom app.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 	
 	<!-- app scripts -->
 	<script src="appModule.js"></script>
+	<script src="userController.js"></script>
 	<script src="videoController.js"></script>
     <script src="app.js"></script>
 
 
 </head>
 <body>
-<div class="container" ><!-- ng-controller="mainController"-->
+<div class="container" >
   
 	<div class="page-header text-center">
-		<h1>Subtitle HUB</h1>        
+		<h1>Subtitles Demo</h1>        
 	</div>
 	
-	<!--<div ng-include="'videoList.html'"></div>-->
-	<div ng-controller="videoController">
-		<ul>
-		  <li class="video-block" ng-repeat="video in videos | orderBy:'-$value'">
-			  <div class="youtube-player">
-					  <iframe id="ytplayer" type="text/html" width="480" height="270"
-					  ng-src="{{trustSrc(video.$id)}}" frameborder="0"></iframe>
-					  <div class="voting-stuff">
-						<div class="vote-count" >
-							<p id="vote">votes : {{ video.$value }}</p>
-						</div>
-						<button type="button" class="btn btn-danger" aria-label="Down Vote" ng-click="downVote(video)"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
-						<button type="button" class="btn btn-success" aria-label="Up Vote" ng-click="upVote(video)"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
-					  </div>
-				</div>
-			</li>		
-		</ul>
+	<div id="authControl" class="text-right" ng-controller="userController">
+		<div > <!--ng-hide="user"-->
+			<form name="Login" ng-submit="loginUser()">
+				<input type="text" required ng-model="userEmail"/>
+				<input type="password" required ng-model="userPassword"/> 
+				<input type="submit" value="Log in"/>
+				<div>{{errorMessage}}</div>
+			</form>
+		</div>
+		<div > <!--ng-show="user"-->
+			<p>Hello</p> <!--, {{ user.email }}-->
+			<button ng-click="signOutUser()">Sign Out</button>
+		</div>
+	</div>
+
+	
+	<div ng-controller="videoController"> 
+		<div>
+			<p> Be woke, add a video : <p/>
+			<form name="AddNewVideo" ng-submit="addNewVideo()">
+				<input type="text" required place-holder="youtube link of the video to add" ng-model="videoUrl" />
+				<input type="submit" value="Add"  />
+			</form>
+		</div>
+		
+		<!--<div ng-include="'videoList.html'"></div>-->
+		<div >
+			<ul>
+			  <li class="video-block" ng-repeat="video in videos | orderBy:'-$value'">
+				  <div class="youtube-player">
+						  <iframe id="ytplayer" type="text/html" width="480" height="270"
+						  ng-src="{{trustSrc(video.videoId)}}" frameborder="0"></iframe>
+						  <div class="voting-stuff">
+							<div class="vote-count" >
+								<p id="vote">votes : {{ video.votes }}</p>
+							</div>
+							<button type="button" class="btn btn-danger" aria-label="Down Vote" ng-click="downVote(video)"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
+							<button type="button" class="btn btn-success" aria-label="Up Vote" ng-click="upVote(video)"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
+						  </div>
+						  
+					</div>
+				</li>		
+			</ul>
+		</div>
 	</div>
 </div>
 </body>
